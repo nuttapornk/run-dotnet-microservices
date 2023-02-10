@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Ordering.Application.Common.Interfaces;
 
 namespace Ordering.Application.Orders.Queries.GetOrderList
@@ -11,17 +12,21 @@ namespace Ordering.Application.Orders.Queries.GetOrderList
 
     public class GetOrderListHandler : IRequestHandler<GetOrderListQuery, List<GetOrderListResponse>>
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public GetOrderListHandler(IOrderRepository orderRepository,IMapper mapper)
+        public GetOrderListHandler(IApplicationDbContext context, IMapper mapper)
         {
-            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<List<GetOrderListResponse>> Handle(GetOrderListQuery request, CancellationToken cancellationToken)
         {
-            var result = await _orderRepository.GetOrdersByUsername(request.Username);
+            var result = await _context.Orders
+                .Where(a => a.Username == request.Username)
+                .ToListAsync(cancellationToken: cancellationToken);
+
+
             return _mapper.Map<List<GetOrderListResponse>>(result);
         }
     }
