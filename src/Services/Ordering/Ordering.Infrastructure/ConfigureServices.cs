@@ -14,7 +14,7 @@ public static class ConfigureServices
     {
         // Set database Connection string
         services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Ording")));
+                options.UseSqlServer(configuration.GetConnectionString("Ordering")));
 
         // Interface IApplicationDbContext DbContext for Datebase connection
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

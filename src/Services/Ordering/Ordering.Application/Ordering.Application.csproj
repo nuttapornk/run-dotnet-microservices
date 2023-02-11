@@ -24,5 +24,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Mapping\" />
+    <Folder Include="Orders\Commands\DeleteOrder\" />
+  </ItemGroup>
 
 </Project>
