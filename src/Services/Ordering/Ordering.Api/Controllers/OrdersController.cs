@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Ordering.Application.Orders.Queries.GetOrderList.v1;
+using RunDotnetMicroServicesNuget.Common.Models;
 
-namespace Ordering.Api.Controllers
+namespace Ordering.Api.Controllers;
+
+[ApiController]
+[Route("api/v1/[controller]")]
+public class OrdersController : ApiControllerBase
 {
-    [ApiController]
-    public class OrdersController : ApiControllerBase
+    [HttpGet]        
+    public async Task<IActionResult> GetOrdersByUsername(GetOrderListQuery request)
     {
-
-        [HttpGet("api/[controller]/GetOrder/{username}")]
-        public IActionResult GetOrderByUsername(string username)
+        try
         {
-            return Ok();
+            var result = await Mediator.Send(request);
+            return Ok(BaseResponse.Ok(result));
         }
+        catch (Exception ex)
+        {
+
+            return BadRequest(BaseResponse.Err(message: ex.Message);
+        }
+        
     }
 }
