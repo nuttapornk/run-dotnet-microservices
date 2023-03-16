@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.Orders.Commands.DeleteOrder;
+namespace Ordering.Application.Orders.Commands.DeleteOrder.v1;
 
 public record DeleteOrderCommand : IRequest
 {
@@ -15,10 +15,10 @@ public class DeleteOrderCommandHanderler : IRequestHandler<DeleteOrderCommand>
     private readonly IApplicationDbContext _context;
     private readonly ILogger<DeleteOrderCommandHanderler> _logger;
 
-    public DeleteOrderCommandHanderler(IApplicationDbContext context,ILogger<DeleteOrderCommandHanderler> logger)
+    public DeleteOrderCommandHanderler(IApplicationDbContext context, ILogger<DeleteOrderCommandHanderler> logger)
     {
-        _context= context ?? throw new ArgumentNullException(nameof(context));
-        _logger= logger ?? throw new ArgumentNullException(nameof(logger));
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
     public async Task<Unit> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
     {

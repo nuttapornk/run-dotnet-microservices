@@ -2,7 +2,7 @@
 using EventBus.Messages.Events;
 using MassTransit;
 using MediatR;
-using Ordering.Application.Orders.Commands.CheckoutOrder;
+using Ordering.Application.Orders.Commands.CheckoutOrder.v1;
 
 namespace Ordering.Api.EventBusConsumer;
 

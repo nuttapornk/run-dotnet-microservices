@@ -1,24 +1,23 @@
-﻿namespace EventBus.Messages.Events
+﻿namespace EventBus.Messages.Events;
+
+public class BasketCheckoutEvent : IntegrationBaseEvent
 {
-    public class BasketCheckoutEvent : IntegrationBaseEvent
-    {
-        public string Username { get; set; } = string.Empty;
-        public decimal TotalPrice { get; set; }
+    public string Username { get; set; } = string.Empty;
+    public decimal TotalPrice { get; set; }
 
-        //Address
-        public string FristName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string EmailAddress { get; set; } = string.Empty;
-        public string AddressLine { get; set; } = string.Empty;
-        public string Country { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
-        public string ZipCode { get; set; } = string.Empty;
+    //Address
+    public string FristName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string EmailAddress { get; set; } = string.Empty;
+    public string AddressLine { get; set; } = string.Empty;
+    public string Country { get; set; } = string.Empty;
+    public string State { get; set; } = string.Empty;
+    public string ZipCode { get; set; } = string.Empty;
 
-        //Payment
-        public string CardName { get; set; } = string.Empty;
-        public string CardNumber { get; set; } = string.Empty;
-        public string Expiration { get; set; } = string.Empty;
-        public string Cvv { get; set; } = string.Empty;
-        public int PaymentMethod { get; set; }
-    }
+    //Payment
+    public string CardName { get; set; } = string.Empty;
+    public string CardNumber { get; set; } = string.Empty;
+    public string Expiration { get; set; } = string.Empty;
+    public string Cvv { get; set; } = string.Empty;
+    public int PaymentMethod { get; set; }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.Orders.Commands.UpdateOrder;
+namespace Ordering.Application.Orders.Commands.UpdateOrder.v1;
 
 public record UpdateOrderCommand : IRequest
 {
@@ -34,16 +34,16 @@ public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand>
     private readonly IApplicationDbContext _context;
     private readonly ILogger<UpdateOrderCommandHandler> _logger;
     private readonly IMapper _mapper;
-    public UpdateOrderCommandHandler(IApplicationDbContext context,ILogger<UpdateOrderCommandHandler> logger,IMapper mapper)
+    public UpdateOrderCommandHandler(IApplicationDbContext context, ILogger<UpdateOrderCommandHandler> logger, IMapper mapper)
     {
-        _context= context;
-        _logger= logger;
-        _mapper= mapper;
+        _context = context;
+        _logger = logger;
+        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = await _context.Orders.FindAsync(request.Id,cancellationToken);
+        var order = await _context.Orders.FindAsync(request.Id, cancellationToken);
         if (order == null)
         {
             throw new NotFoundException(nameof(Order), request.Id);

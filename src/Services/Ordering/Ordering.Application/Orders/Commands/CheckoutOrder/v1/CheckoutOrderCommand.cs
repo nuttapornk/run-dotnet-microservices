@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Ordering.Application.Common.Interfaces;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.Orders.Commands.CheckoutOrder;
+namespace Ordering.Application.Orders.Commands.CheckoutOrder.v1;
 
 public record CheckoutOrderCommand : IRequest<int>
 {
@@ -33,11 +33,11 @@ public class CheckoutOrderCommandHandler : IRequestHandler<CheckoutOrderCommand,
     private readonly IApplicationDbContext _context;
     private readonly ILogger<CheckoutOrderCommandHandler> _logger;
     private readonly IMapper _mapper;
-    public CheckoutOrderCommandHandler(IApplicationDbContext context,ILogger<CheckoutOrderCommandHandler> logger,IMapper mapper)
+    public CheckoutOrderCommandHandler(IApplicationDbContext context, ILogger<CheckoutOrderCommandHandler> logger, IMapper mapper)
     {
-        _context= context ?? throw new ArgumentNullException(nameof(context));
-        _logger= logger ?? throw new ArgumentNullException(nameof(logger));
-        _mapper= mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)

@@ -27,7 +27,6 @@
   
   <ItemGroup>
     <Folder Include="Mapping\" />
-    <Folder Include="Orders\Commands\DeleteOrder\" />
   </ItemGroup>
 
 </Project>

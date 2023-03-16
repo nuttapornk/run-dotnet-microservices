@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.Application.Orders.Commands.UpdateOrder;
+namespace Ordering.Application.Orders.Commands.UpdateOrder.v1;
 
 public class UpdateOrderCommandValidator : AbstractValidator<UpdateOrderCommand>
 {
-	public UpdateOrderCommandValidator()
-	{
+    public UpdateOrderCommandValidator()
+    {
         RuleFor(a => a.Username)
             .NotNull()
             .NotEmpty().WithMessage("{Username} is required.")
