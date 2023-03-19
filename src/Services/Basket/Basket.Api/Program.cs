@@ -1,5 +1,8 @@
 using Basket.Api.Repository;
 using Basket.Api.Repository.Interfaces;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,18 +23,38 @@ builder.Services.AddAutoMapper(typeof(Program));
 //    (o => o.Address = new Uri(builder.Configuration["GrpcSetting:DiscountUrl"]));
 
 
+//// MassTransit-RabbitMQ Configuration
+//services.AddMassTransit(config => {
+//    config.UsingRabbitMq((ctx, cfg) => {
+//        cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+//        cfg.UseHealthCheck(ctx);
+//    });
+//});
+//services.AddMassTransitHostedService();
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(a =>
+{
+    a.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Basket.Api",
+        Version = "v1"
+    });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(a =>
+    {
+        a.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.Api v1");
+    });
 }
 
 app.UseHttpsRedirection();
@@ -39,5 +62,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 app.Run();
