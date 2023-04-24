@@ -21,13 +21,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseHealthChecksUI(config =>
-    config.UIPath = "/hc-ui"
-);
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHealthChecksUI();
-});
+
+app.MapHealthChecksUI();
 
 app.MapControllerRoute(
     name: "default",
