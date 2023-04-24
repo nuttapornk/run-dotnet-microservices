@@ -2,7 +2,7 @@
   "Routes": [
     //Catalog API
     {
-      "DownstreamPathTemplate": "/api/v1/Catalog",
+      "DownstreamPathTemplate": "/api/v1/catalog",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -10,12 +10,12 @@
           "Port": "8000"
         }
       ],
-      "UpstreamPathTemplate": "/Catalog",
+      "UpstreamPathTemplate": "/catalog",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Catalog/{id}",
+      "DownstreamPathTemplate": "/api/v1/catalog/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -23,11 +23,11 @@
           "Port": "8000"
         }
       ],
-      "UpstreamPathTemplate": "/Catalog/{id}",
+      "UpstreamPathTemplate": "/catalog/{id}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Catalog/GetProductByCategory/{category}",
+      "DownstreamPathTemplate": "/api/v1/catalog/GetProductByCategory/{category}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -35,7 +35,7 @@
           "Port": "8000"
         }
       ],
-      "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
+      "UpstreamPathTemplate": "/catalog/GetProductByCategory/{category}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Basket API
@@ -48,7 +48,7 @@
           "Port": "8001"
         }
       ],
-      "UpstreamPathTemplate": "/Basket/{userName}",
+      "UpstreamPathTemplate": "/basket/{userName}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
@@ -60,11 +60,11 @@
           "Port": "8001"
         }
       ],
-      "UpstreamPathTemplate": "/Basket",
+      "UpstreamPathTemplate": "/basket",
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Basket/Checkout",
+      "DownstreamPathTemplate": "/api/v1/basket/Checkout",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -72,7 +72,7 @@
           "Port": "8001"
         }
       ],
-      "UpstreamPathTemplate": "/Basket/Checkout",
+      "UpstreamPathTemplate": "/basket/Checkout",
       "UpstreamHttpMethod": [ "POST" ],
       "RateLimitOptions": {
         "ClientWhitelist": [],
@@ -84,7 +84,7 @@
     },
     //Discount API
     {
-      "DownstreamPathTemplate": "/api/v1/Discount/{productName}",
+      "DownstreamPathTemplate": "/api/v1/discount/{productName}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -92,11 +92,11 @@
           "Port": "8002"
         }
       ],
-      "UpstreamPathTemplate": "/Discount/{productName}",
+      "UpstreamPathTemplate": "/discount/{productName}",
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/Discount",
+      "DownstreamPathTemplate": "/api/v1/discount",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -104,12 +104,12 @@
           "Port": "8002"
         }
       ],
-      "UpstreamPathTemplate": "/Discount",
+      "UpstreamPathTemplate": "/discount",
       "UpstreamHttpMethod": [ "PUT", "POST" ]
     },
     //Order API
     {
-      "DownstreamPathTemplate": "/api/v1/Order/{userName}",
+      "DownstreamPathTemplate": "/api/v1/order/{userName}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -117,7 +117,7 @@
           "Port": "8004"
         }
       ],
-      "UpstreamPathTemplate": "/Order/{userName}",
+      "UpstreamPathTemplate": "/order/{userName}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],

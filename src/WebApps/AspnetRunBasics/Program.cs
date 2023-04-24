@@ -1,8 +1,24 @@
+using AspnetRunBasics.Services;
+using Common.Logging;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Polly;
+using Polly.Extensions.Http;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration config = builder.Configuration;
 
 // Add services to the container.
+
+builder.Services.AddTransient<LoggingDelegatingHandler>();
+
+builder.Services.AddHttpClient<IBasketService, BasketService>(a => a.BaseAddress = new Uri(config["ApiSetting:GatewayAddress"]))
+    .AddHttpMessageHandler<LoggingDelegatingHandler>()
+    .AddPolicyHandler(GetRetryPolicy())
+    .AddPolicyHandler(GetCircuitBreakerPolicy());
+
 builder.Services.AddRazorPages();
 
 builder.Services.AddHealthChecks()
@@ -20,15 +36,38 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
+app.MapHealthChecks("/hc", new HealthCheckOptions
 {
-    endpoints.MapRazorPages();
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
+app.MapRazorPages();
+
 app.Run();
+
+IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .WaitAndRetryAsync(retryCount: 5,
+        sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+        onRetry: (exception, retryCount, context) =>
+        {
+            Log.Error($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}.");
+        });
+}
+
+IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+{
+    return HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .CircuitBreakerAsync(handledEventsAllowedBeforeBreaking: 5, durationOfBreak: TimeSpan.FromSeconds(30));
+}
